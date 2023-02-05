@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,5 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('login', [AuthController::class, 'authenticate']);
-Route::resource('users', UserController::class);
-Route::get('users/{id}/payments', [PaymentController::class, 'index']);
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::apiResource('users', CustomerController::class);
+    Route::get('users/{id}/payments', [PaymentController::class, 'index']);
+});

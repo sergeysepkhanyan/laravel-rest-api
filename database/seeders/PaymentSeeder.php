@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Customer;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -16,13 +17,13 @@ class PaymentSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::all();
+        $users = Customer::all();
         $statuses = ['In Progress', 'Confirmed', 'Declined'];
         $currencies = ['EUR', 'USD'];
         foreach ($users as $user){
             for($i = 0; $i < 10; $i++){
                 Payment::create([
-                    'user_id' => $user->id,
+                    'customer_id' => $user->id,
                     'amount' => rand(10, 9999),
                     'currency' => Arr::random($currencies),
                     'status' => Arr::random($statuses)

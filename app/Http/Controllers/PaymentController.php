@@ -11,12 +11,12 @@ class PaymentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param $userId
+     * @param $customerId
      * @return JsonResponse
      */
-    public function index($userId): JsonResponse
+    public function index($customerId): JsonResponse
     {
-        $payments = Payment::where('user_id', $userId)->get();
+        $payments = Payment::where('customer_id', $customerId)->with('customer')->get();
 
         return response()->json([
             'success' => true,

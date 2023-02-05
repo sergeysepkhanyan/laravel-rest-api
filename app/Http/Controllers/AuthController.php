@@ -6,22 +6,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\JWTAuth;
+use JWTAuth;
 use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
     public function authenticate(Request $request): JsonResponse
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
 
         $validator = Validator::make($credentials, [
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required|string|min:6|max:50'
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
+            return response()->json(['error' => $validator->messages()], 400);
         }
 
         try {
@@ -40,7 +40,7 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'token' => $token,
+            'accessToken' => $token
         ]);
     }
 

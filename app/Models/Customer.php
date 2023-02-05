@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class Customer extends Model
 {
     use HasFactory;
     protected $fillable = [
-       'amount', 'currency', 'status'
+       'name','email', 'mobile'
     ];
 
-    public function customer()
+    public function payments()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->hasMany(Payment::class);
     }
 }

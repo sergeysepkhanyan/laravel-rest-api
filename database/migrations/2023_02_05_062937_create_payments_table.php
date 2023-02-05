@@ -15,14 +15,14 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('customer_id')->index();
             $table->double('amount');
             $table->enum('currency',['EUR', 'USD']);
             $table->enum('status',['In Progress', 'Confirmed', 'Declined']);
             $table->timestamps();
-            $table->foreign('user_id')
+            $table->foreign('customer_id')
                 ->references('id')
-                ->on('users')
+                ->on('customers')
                 ->onDelete('cascade');
         });
     }
